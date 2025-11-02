@@ -10,7 +10,7 @@ export default function ChatbotDemo() {
   const messagesEndRef = useRef(null);
 
   // CONFIGURATION - Change this URL to your backend when deployed
-  const BACKEND_URL = 'http://localhost:3001';
+  const BACKEND_URL = '';
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
