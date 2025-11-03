@@ -100,7 +100,7 @@ export default function ChatbotDemo() {
 
       {/* Chat Window */}
       {isOpen && (
-        <div className="bg-white rounded-2xl shadow-2xl w-90 h-[500px] flex flex-col overflow-hidden border border-transparent-200">
+        <div className="bg-white rounded-2xl shadow-2xl w-90 h-[500px] flex flex-col overflow-hidden border border-gray-200">
           {/* Header */}
           <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-4 flex items-center justify-between">
             <div className="flex items-center gap-3">
