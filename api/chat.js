@@ -32,7 +32,7 @@ export default async function handler(req, res) {
     }
 
     const context = conversationContexts.get(sessionId);
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    const model = genAI.getGenerativeModel({ model: "gemini-flash-latest" });
 
     let prompt;
     if (!context.initialized) {
