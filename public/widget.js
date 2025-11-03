@@ -6,10 +6,19 @@
   iframe.style.right = '20px';
   iframe.style.width = '400px';
   iframe.style.height = '600px';
-  iframe.style.border = 'none';
+  iframe.style.border = '0';
   iframe.style.borderRadius = '12px';
   iframe.style.zIndex = '9999';
   iframe.style.boxShadow = '0 4px 20px rgba(0,0,0,0.15)';
+  iframe.style.overflow = 'hidden';
+  iframe.style.display = 'block';
+  iframe.style.background = 'transparent';
+  iframe.style.outline = 'none';
+  iframe.style.boxSizing = 'border-box';
+  // prevent browser default focus outlines / borders
+  iframe.setAttribute('frameBorder', '0');
+  iframe.setAttribute('scrolling', 'no');
+  iframe.setAttribute('allowTransparency', 'true');
   iframe.setAttribute('allow', 'clipboard-write; clipboard-read;');
 
   document.body.appendChild(iframe);
