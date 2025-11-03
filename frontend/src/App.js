@@ -30,7 +30,7 @@ export default function ChatbotDemo() {
         }
       ]);
     }
-  }, [isOpen]);
+  }, [isOpen, messages]);
 
   const sendMessage = async (e) => {
     e.preventDefault();
