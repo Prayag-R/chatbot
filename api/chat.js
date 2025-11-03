@@ -7,6 +7,15 @@ const BUSINESS_CONFIG = {
   industry: "Coffee Shop",
   knowledgeBase: `
 BUSINESS NAME: Sunset Coffee Roasters
+BUSINESS INFORMATION:
+${BUSINESS_CONFIG.knowledgeBase}
+
+RESPONSE FORMAT RULES:
+- Do NOT use ** for bold
+- Do NOT use __ for underline  
+- Do NOT use ## for headers
+- Write everything in plain text
+- If information is not in the business information above, say "I don't have that information"
 
 ABOUT US:
 We're a family-owned coffee shop in downtown, serving the community since 2018. 
@@ -110,6 +119,13 @@ export default async function handler(req, res) {
 
     const result = await chat.sendMessage(prompt);
     const response = result.response.text();
+    response = response
+      .replace(/\*\*(.+?)\*\*/g, '$1')  // Remove bold **text**
+      .replace(/\*(.+?)\*/g, '$1')      // Remove italic *text*
+      .replace(/__(.+?)__/g, '$1')      // Remove underline __text__
+      .replace(/_(.+?)_/g, '$1')        // Remove italic _text_
+      .replace(/##\s+/g, '')            // Remove headers ##
+      .replace(/###\s+/g, '');          // Remove headers ###
 
     context.history.push({ role: "user", content: message });
     context.history.push({ role: "assistant", content: response });
