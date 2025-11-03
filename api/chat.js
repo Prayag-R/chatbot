@@ -111,7 +111,29 @@ export default async function handler(req, res) {
     });
 
     const result = await chat.sendMessage(prompt);
-    const response = result.response.text();
+    let response = result.response.text();
+
+// Postprocess Gemini output to remove formatting
+response = response
+  // Remove markdown bold/italic markers
+  .replace(/[*_~`]+/g, "")
+  // Replace fancy Unicode bold/italic variants (e.g., 𝗛𝗲𝗹𝗹𝗼 or 𝘛𝘦𝘹𝘵)
+  .replace(/[\u{1D400}-\u{1D7FF}]/gu, (char) => {
+    try {
+      // Convert mathematical alphabets back to normal
+      const base = char.codePointAt(0);
+      // These ranges correspond roughly to Latin uppercase/lowercase letters
+      if (base >= 0x1D400 && base <= 0x1D433) return String.fromCharCode(base - 0x1D3C0); // A–Z bold
+      if (base >= 0x1D434 && base <= 0x1D467) return String.fromCharCode(base - 0x1D400); // A–Z italic
+      if (base >= 0x1D44E && base <= 0x1D481) return String.fromCharCode(base - 0x1D3CA); // a–z bold
+      return char;
+    } catch {
+      return char;
+    }
+  })
+  // Remove stray control characters or invisible Unicode symbols
+  .replace(/[\u200B-\u200D\uFEFF]/g, "")
+  .trim();
     
     context.history.push({ role: "user", content: message });
     context.history.push({ role: "assistant", content: response });
