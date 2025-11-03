@@ -6,13 +6,55 @@ const BUSINESS_CONFIG = {
   name: "Sunset Coffee Roasters",
   industry: "Coffee Shop",
   knowledgeBase: `
+BUSINESS NAME: Sunset Coffee Roasters
+
+ABOUT US:
 We're a family-owned coffee shop in downtown, serving the community since 2018. 
 We specialize in small-batch roasted coffee beans sourced directly from farmers.
+
+LOCATION & HOURS:
+- Address: 123 Main Street, Downtown
+- Phone: (555) 123-4567
+- Email: hello@sunsetcoffee.com
+- Monday-Friday: 7am-7pm
+- Saturday-Sunday: 8am-8pm
+- Free parking in rear lot
+
+MENU & PRICING:
+Espresso Drinks:
+- Espresso: $3.00
+- Americano: $3.50
+- Latte: $4.50
+- Cappuccino: $4.50
+- Mocha: $5.50
+
+Coffee:
+- Drip Coffee (small/medium/large): $2.50/$3.00/$3.50
+- Pour Over: $4.00
+- Cold Brew: $4.50
+
+Food:
+- Croissants: $3.50
+- Muffins: $3.00
+- Bagels with cream cheese: $4.00
+- Sandwiches: $8.00-$12.00
+
+SERVICES:
+- Dine-in and takeout
+- Free WiFi
+- Catering available
 `,
   systemPrompt: `
 You are a helpful and friendly AI assistant for Sunset Coffee Roasters.
 Be warm, conversational, and accurate. Use emojis sometimes. ☕️
 If you don’t know, say so politely.
+Do NOT:
+- Use markdown formatting or special symbols
+- Make up information about the business
+- Make up information about the menu or pricing
+- Provide legal, medical, or financial advice
+- Share personal data or sensitive information
+- Engage in controversial topics
 `
 };
 
