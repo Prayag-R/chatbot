@@ -1,6 +1,6 @@
 (function() {
   const iframe = document.createElement('iframe');
-  iframe.src = 'https://yourproject.vercel.app'; // change to your Vercel domain
+  iframe.src = 'https://chatbot-seven-self-48.vercel.app/embed'; // change to your Vercel domain
   iframe.style.position = 'fixed';
   iframe.style.bottom = '20px';
   iframe.style.right = '20px';
