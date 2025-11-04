@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Send, MessageCircle, X, Sparkles, Loader2 } from 'lucide-react';
 
 // Feature toggle: set to `true` to enable the app, `false` to disable (will stop execution)
-const KEY = true; // change to false to disable the entire application
+const KEY = false; // change to false to disable the entire application
 
 if (KEY !== true) {
   // Fail fast: throw an error so the app does not run when KEY is not true.
