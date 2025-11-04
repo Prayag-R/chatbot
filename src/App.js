@@ -32,23 +32,6 @@ export default function ChatbotDemo() {
     }
   }, [isOpen, messages]);
 
-  // Send message to parent when chat opens/closes
-  useEffect(() => {
-    if (isOpen) {
-      window.parent.postMessage({ action: 'open' }, '*');
-    } else {
-      window.parent.postMessage({ action: 'close' }, '*');
-    }
-  }, [isOpen]);
-
-  const handleOpenChat = () => {
-    setIsOpen(true);
-  };
-
-  const handleCloseChat = () => {
-    setIsOpen(false);
-  };
-
   const sendMessage = async (e) => {
     e.preventDefault();
     if (!input.trim() || isLoading) return;
@@ -105,7 +88,7 @@ export default function ChatbotDemo() {
       {/* Chat Widget Button */}
       {!isOpen && (
         <button
-          onClick={handleOpenChat}
+          onClick={() => setIsOpen(true)}
           className="bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-full p-4 shadow-2xl hover:shadow-3xl transform hover:scale-110 transition-all duration-300 flex items-center gap-2 group"
         >
           <MessageCircle size={24} />
@@ -130,7 +113,7 @@ export default function ChatbotDemo() {
               </div>
             </div>
             <button
-              onClick={handleCloseChat}
+              onClick={() => setIsOpen(false)}
               className="hover:bg-white/20 rounded-full p-1 transition-colors"
             >
               <X size={20} />
