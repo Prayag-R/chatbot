@@ -122,6 +122,8 @@ export default async function handler(req, res) {
 response = response
   // Remove markdown bold/italic markers
   .replace(/[*_~`]+/g, "")
+  // Remove markdown headers (### Header)
+  .replace(/^#{1,6}\s+/gm, "")
   // Replace fancy Unicode bold/italic variants (e.g., 𝗛𝗲𝗹𝗹𝗼 or 𝘛𝘦𝘹𝘵)
   .replace(/[\u{1D400}-\u{1D7FF}]/gu, (char) => {
     try {
