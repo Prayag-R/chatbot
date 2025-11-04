@@ -6,6 +6,7 @@ const BUSINESS_CONFIG = {
   name: "Sunset Coffee Roasters",
   industry: "Coffee Shop",
   knowledgeBase: `
+  KNOWLEDGE BASE:
 BUSINESS NAME: Sunset Coffee Roasters
 
 ABOUT US:
@@ -57,7 +58,7 @@ Do not output markdown tables or code blocks unless the user specifically asks f
 
 CRITICAL RULES:
 1. ONLY use information from the business information provided below
-2. NEVER make up menu items, prices, hours, or any details not explicitly provided
+2. NEVER make up menu items, prices, hours, or any details not explicitly provided in the knowledge base
 3. NEVER use asterisks, markdown, or any special formatting characters (no **, __, ##, etc)
 4. Write in plain text only - no bold, italics, or formatting
 5. If you don't know something, say "I don't have that information, but you can call us at [phone number]"
