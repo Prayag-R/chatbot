@@ -13,6 +13,7 @@
   iframe.style.background = 'transparent';
   iframe.style.outline = 'none';
   iframe.setAttribute('allow', 'clipboard-write; clipboard-read;');
+  iframe.style.boxShadow = 'none';
 
   document.body.appendChild(iframe);
 })();
