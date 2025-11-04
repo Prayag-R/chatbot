@@ -60,14 +60,7 @@ export default function ChatbotDemo() {
       });
 
       if (!response.ok) throw new Error('Failed to get response');
-      if (data.error === 'This chatbot is currently inactive.') {
-        setMessages(prev => [...prev, {
-          role: 'assistant',
-          content: 'This chatbot is currently inactive. Please contact support.',
-          timestamp: new Date()
-        }]);
-        return;
-      }
+      
       const data = await response.json();
 
       const botMessage = {

@@ -1,7 +1,5 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
-if (process.env.CHATBOT_ACTIVE === 'false') {
-  return res.status(403).json({ error: 'This chatbot is currently inactive.' });
-}
+
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 const BUSINESS_CONFIG = {
