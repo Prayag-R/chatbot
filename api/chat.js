@@ -52,7 +52,7 @@ Never invent specific details like prices or menu items or policies even if you 
 If they ask for information that is not in the knowledge base, respond with "I don't have that information, please use our contact form or call us at (555) 123-4567"
 You are a helpful and friendly AI assistant for Sunset Coffee Roasters.
 Be warm, conversational, and extremely extremely accurate. Use emojis sometimes. ☕️
-If you don’t know, say so politely.
+If you don't know, say so politely.
 
 When answering user questions, respond in natural conversational language.
 Do not output markdown tables or code blocks unless the user specifically asks for a table or formatted list.
@@ -96,19 +96,14 @@ export default async function handler(req, res) {
       return res.status(400).json({ error: "Missing message or sessionId" });
 
     if (!conversationContexts.has(sessionId)) {
-      conversationContexts.set(sessionId, { history: [], initialized: false });
+      conversationContexts.set(sessionId, { history: [] });
     }
 
     const context = conversationContexts.get(sessionId);
     const model = genAI.getGenerativeModel({ model: "gemini-flash-latest" });
 
-    let prompt;
-    if (!context.initialized) {
-      prompt = `${BUSINESS_CONFIG.systemPrompt}\n\nBusiness info:\n${BUSINESS_CONFIG.knowledgeBase}\n\nUser: ${message}`;
-      context.initialized = true;
-    } else {
-      prompt = message;
-    }
+    // ALWAYS include system prompt and knowledge base
+    const fullPrompt = `${BUSINESS_CONFIG.systemPrompt}\n\nBusiness info:\n${BUSINESS_CONFIG.knowledgeBase}\n\nUser: ${message}`;
 
     const chat = model.startChat({
       history: context.history.map((msg) => ({
@@ -117,32 +112,30 @@ export default async function handler(req, res) {
       })),
     });
 
-    const result = await chat.sendMessage(prompt);
+    const result = await chat.sendMessage(fullPrompt);
     let response = result.response.text();
 
-// Postprocess Gemini output to remove formatting
-response = response
-  // Remove markdown bold/italic markers
-  .replace(/[*_~`]+/g, "")
-  // Remove markdown headers (### Header)
-  .replace(/^#{1,6}\s+/gm, "")
-  // Replace fancy Unicode bold/italic variants (e.g., 𝗛𝗲𝗹𝗹𝗼 or 𝘛𝘦𝘹𝘵)
-  .replace(/[\u{1D400}-\u{1D7FF}]/gu, (char) => {
-    try {
-      // Convert mathematical alphabets back to normal
-      const base = char.codePointAt(0);
-      // These ranges correspond roughly to Latin uppercase/lowercase letters
-      if (base >= 0x1D400 && base <= 0x1D433) return String.fromCharCode(base - 0x1D3C0); // A–Z bold
-      if (base >= 0x1D434 && base <= 0x1D467) return String.fromCharCode(base - 0x1D400); // A–Z italic
-      if (base >= 0x1D44E && base <= 0x1D481) return String.fromCharCode(base - 0x1D3CA); // a–z bold
-      return char;
-    } catch {
-      return char;
-    }
-  })
-  // Remove stray control characters or invisible Unicode symbols
-  .replace(/[\u200B-\u200D\uFEFF]/g, "")
-  .trim();
+    // Postprocess Gemini output to remove formatting
+    response = response
+      // Remove markdown bold/italic markers
+      .replace(/[*_~`]+/g, "")
+      // Remove markdown headers (### Header)
+      .replace(/^#{1,6}\s+/gm, "")
+      // Replace fancy Unicode bold/italic variants
+      .replace(/[\u{1D400}-\u{1D7FF}]/gu, (char) => {
+        try {
+          const base = char.codePointAt(0);
+          if (base >= 0x1D400 && base <= 0x1D433) return String.fromCharCode(base - 0x1D3C0);
+          if (base >= 0x1D434 && base <= 0x1D467) return String.fromCharCode(base - 0x1D400);
+          if (base >= 0x1D44E && base <= 0x1D481) return String.fromCharCode(base - 0x1D3CA);
+          return char;
+        } catch {
+          return char;
+        }
+      })
+      // Remove stray control characters or invisible Unicode symbols
+      .replace(/[\u200B-\u200D\uFEFF]/g, "")
+      .trim();
     
     context.history.push({ role: "user", content: message });
     context.history.push({ role: "assistant", content: response });
