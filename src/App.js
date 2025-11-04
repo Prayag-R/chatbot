@@ -1,6 +1,15 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Send, MessageCircle, X, Sparkles, Loader2 } from 'lucide-react';
 
+// Feature toggle: set to `true` to enable the app, `false` to disable (will stop execution)
+const KEY = true; // change to false to disable the entire application
+
+if (KEY !== true) {
+  // Fail fast: throw an error so the app does not run when KEY is not true.
+  // This intentionally prevents the bundle from rendering the UI.
+  throw new Error('Application disabled');
+}
+
 export default function ChatbotDemo() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState([]);
